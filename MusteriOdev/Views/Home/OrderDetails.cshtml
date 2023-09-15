@@ -1,0 +1,43 @@
+﻿@model MusteriOdev.Models.Employee
+
+@{
+    ViewData["Title"] = "Employee";
+}
+
+<h1>Employee Orders</h1>
+
+<div>
+    <dl class="row">
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>Order No</th>
+                    <th>Order Date</th>
+                    <th>Ship Country</th>
+                </tr>
+                @foreach (var orders in Model.Orders)
+                {
+                    <tbody>
+                        @foreach (var orderDetails in orders.OrderDetails)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => orderDetails.OrderId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => orderDetails.Order.OrderDate)
+                                </td>
+                                <td> @Html.DisplayFor(modelItem => orderDetails.Order.ShipCountry)
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+            </table>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
