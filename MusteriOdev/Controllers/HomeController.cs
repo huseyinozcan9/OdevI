@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MusteriOdev.Models;
+using MusteriOdev.Models.DTO;
 using System.Diagnostics;
 
 namespace MusteriOdev.Controllers
@@ -36,23 +37,24 @@ namespace MusteriOdev.Controllers
         // GET: Employee/OrderDetails/id
         public async Task<IActionResult> OrderDetails(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+ 
 
-            var customers = await _nwContext.Employees
+            var employees = await _nwContext.Employees
                                           .Include(employee => employee.Orders)
                                           .ThenInclude(order => order.OrderDetails)
                                           .ThenInclude(orderdetails => orderdetails.Product)
                                           .AsNoTracking()
                                           .FirstOrDefaultAsync(m => m.EmployeeId == id);
-            if (customers == null)
-            {
-                return NotFound();
-            }
 
-            return View(customers);
+            //var result = from e in _nwContext.Employees 
+            //             join o in _nwContext.Orders
+            //             on e.EmployeeId equals o.EmployeeId
+            //             join od in _nwContext.OrderDetails
+            //             on o.OrderId equals od.OrderId
+            //             where e.EmployeeId == id
+            //             select e;
+                      
+            return View(employees);
         }
         // GET: Customer/Create
         public IActionResult Create()
